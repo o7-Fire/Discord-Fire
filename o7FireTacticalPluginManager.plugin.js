@@ -73,6 +73,24 @@ class o7FireTacticalPluginManager {
         this.add("https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/CompleteTimestamps/CompleteTimestamps.plugin.js");
         this.add("https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/BetterFormattingRedux/BetterFormattingRedux.plugin.js");
     }
+    // Start/Stop
+    start() {
+        var libraryScript = document.getElementById('zeresLibraryScript');
+	if (!libraryScript) {
+		libraryScript = document.createElement("script");
+		libraryScript.setAttribute("type", "text/javascript");
+		libraryScript.setAttribute("src", "https://rauenzi.github.io/BetterDiscordAddons/Plugins/PluginLibrary.js");
+		libraryScript.setAttribute("id", "zeresLibraryScript");
+		document.head.appendChild(libraryScript);
+	}
+
+	if (typeof window.ZeresLibrary !== "undefined") this.initialize();
+	else libraryScript.addEventListener("load", () => { this.initialize(); });
+    }
+       
+    stop() {
+        PluginUtilities.showToast(this.getName() + " " + this.getVersion() + " has stopped.");
+    };
     //  Initialize
     initialize() {
         this.initialized = true;
