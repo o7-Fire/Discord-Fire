@@ -64,7 +64,7 @@ class o7FireTacticalPluginManager {
 
     load() {
         try {
-            ZeresPluginLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), 'https://raw.githubusercontent.com/o7-Fire/Discord/main/o7FireTacticalPluginManager.plugin.js');
+            ZeresPluginLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), 'https://raw.githubusercontent.com/o7-Fire/Discord-Fire/main/o7FireTacticalPluginManager.plugin.js');
         }catch (e){}
         this.add("https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
         this.add("https://raw.githubusercontent.com/1Lighty/BetterDiscordPlugins/master/Plugins/MessageLoggerV2/MessageLoggerV2.plugin.js");
