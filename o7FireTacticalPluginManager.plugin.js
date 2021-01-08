@@ -32,7 +32,7 @@ class o7FireTacticalPluginManager {
         "info": {
             "name": "o7FireTacticalPluginManager",
             "author": "o7Fire",
-            "version": "0.4.0",
+            "version": "0.4.1",
             "description": "#Tools"
         },
         "changeLog": {
@@ -41,7 +41,6 @@ class o7FireTacticalPluginManager {
             }
         }
     };
-    hash = "lol ?"
     constructor() {
         this._config = this.config;
     }
@@ -92,10 +91,5 @@ class o7FireTacticalPluginManager {
                     });
                 }
             });
-    }
-    sha256(data) {
-        const crypto = require("crypto");
-        return crypto.createHash("sha256").update(data, "binary").digest("base64");
-        //                                               ------  binary: hash the byte string
     }
 }
