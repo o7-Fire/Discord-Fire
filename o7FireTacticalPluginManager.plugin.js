@@ -32,7 +32,7 @@ class o7FireTacticalPluginManager {
         "info": {
             "name": "o7FireTacticalPluginManager",
             "author": "o7Fire",
-            "version": "0.4.1",
+            "version": "0.4.2",
             "description": "#Tools"
         },
         "changeLog": {
