@@ -32,12 +32,12 @@ class o7FireTacticalPluginManager {
         "info": {
             "name": "o7FireTacticalPluginManager",
             "author": "o7Fire",
-            "version": "0.3.0",
+            "version": "0.4.0",
             "description": "#Tools"
         },
         "changeLog": {
-            "add": {
-                "Ohno": "Yes"
+            "fix": {
+                "how i do use changelog": "fix initialize and update"
             }
         }
     };
@@ -74,7 +74,11 @@ class o7FireTacticalPluginManager {
         this.add("https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/CompleteTimestamps/CompleteTimestamps.plugin.js");
         this.add("https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/BetterFormattingRedux/BetterFormattingRedux.plugin.js");
     }
-
+    //  Initialize
+    initialize() {
+        this.initialized = true;
+        PluginUtilities.showToast(this.getName() + " " + this.getVersion() + " has started.");
+    }
     add(url) {
         let name = url.substring(url.lastIndexOf("/") + 1, url.length)
         if (!require("fs").existsSync(require("path").join(BdApi.Plugins.folder, name)))
