@@ -1,4 +1,5 @@
 import Atom.File.FileUtility;
+import Atom.Reflect.UnThread;
 import Atom.Time.Time;
 import Atom.Utility.Encoder;
 import Atom.Utility.Pool;
@@ -269,19 +270,22 @@ class Main {
 	}
 	
 	public static class DiscordOutput extends OutputStream {
-		StringBuilder sb = new StringBuilder();
+		volatile StringBuilder sb = new StringBuilder();
 		MessageChannel channel;
+		long last = 0;
+		long max = 1750, maxFlush = max + 100;
+		volatile boolean flushPend;
 		
 		public DiscordOutput(MessageChannel channel) {
 			this.channel = channel;
 		}
 		
-		@Override
-		public synchronized void write(int b) {
-			sb.append((char) b);
-			if (linePerLineOutput) {
-				if ((((char) b) == '\n' || System.lineSeparator().equals(String.valueOf((char) b)))) manualFlush();
-			}
+		public synchronized StringBuilder getSb() {
+			return sb;
+		}
+		
+		public boolean minTimeReached() {
+			return (System.currentTimeMillis() - last) > 2000;
 		}
 		
 		public void write(byte[] b, int off, int len) {
@@ -292,25 +296,63 @@ class Main {
 			}
 		}
 		
-		public void write(String s) {
-			sb.append(s);
-			if (linePerLineOutput && (s.endsWith("\n") || s.endsWith(System.lineSeparator()))) manualFlush();
+		@Override
+		public synchronized void write(int b) {
+			getSb().append((char) b);
+			if (linePerLineOutput || getSb().length() > max) {
+				if ((((char) b) == '\n' || System.lineSeparator().equals(String.valueOf((char) b)))) manualFlush();
+			}else if (minTimeReached() || getSb().length() > maxFlush) {
+				manualFlush();
+			}
+			last = System.currentTimeMillis();
 		}
 		
 		public void write(byte[] b) {
 			write(b, 0, b.length);
 		}
 		
+		public void write(String s) {
+			getSb().append(s);
+			if (linePerLineOutput && (s.endsWith("\n") || s.endsWith(System.lineSeparator()) || getSb().length() > max)) {
+				manualFlush();
+			}else if (minTimeReached() || getSb().length() > maxFlush) {
+				manualFlush();
+			}
+			last = System.currentTimeMillis();
+		}
+		
+		public boolean requirement() {
+			return linePerLineOutput || minTimeReached() || getSb().length() > max;
+		}
+		
 		public synchronized void manualFlush() {
-			String s = toString();
-			if (!s.isEmpty()) channel.createMessage(s).subscribe();
-			sb = new StringBuilder();
+			if (requirement()) {
+				String s = toString();
+				s = s.trim();
+				if (!s.isEmpty()) {
+					if (s.length() > max) channel.createMessage("```\n" + s + "\n```").subscribe();
+				}
+				sb = new StringBuilder();
+				flushPend = false;
+			}else if (!linePerLineOutput && !flushPend) {
+				flushPend = true;
+				Pool.submit(() -> {
+					while (flushPend) {
+						UnThread.sleep(100);
+						if (requirement()) {
+							flushPend = false;
+							manualFlush();
+							break;
+						}
+					}
+				});
+			}
 		}
 		
 		
 		@Override
 		public String toString() {
-			return sb.toString();
+			return getSb().toString();
 		}
 	}
 }
