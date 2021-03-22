@@ -1,5 +1,3 @@
-
-
 buildscript {
     repositories {
         mavenLocal()
@@ -15,7 +13,7 @@ buildscript {
         }
     }
 
-    dependencies{
+    dependencies {
         classpath "com.github.o7-Fire.Atomic-Library:Atomic:$atomHash"
     }
 
@@ -29,17 +27,18 @@ repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
 }
-ext{
+ext {
     try {
-        File f = new File(rootDir, "../Atom"), gradle = new File(rootDir, "gradle.properties");
+        File f = new File(rootDir, "../Atom"), gradle = new File(rootDir, "gradle.properties")
         if (f.exists() && gradle.exists()) {
-            String s = new String(Runtime.getRuntime().exec("git rev-parse HEAD", new String[0], f).getInputStream().readAllBytes()).trim();
-            HashMap<String, String> map = Encoder.parseProperty(gradle.toURI().toURL().openStream());
-            map.put("atomHash", s);
-            Files.writeString(gradle.toPath(), Encoder.property(map));
-            atomHash = s;
+            String s = new String(Runtime.getRuntime().exec("git rev-parse HEAD", new String[0], f).getInputStream().readAllBytes()).trim()
+            HashMap<String, String> map = Encoder.parseProperty(gradle.toURI().toURL().openStream())
+            map.put("atomHash", s)
+            Files.writeString(gradle.toPath(), Encoder.property(map))
+            atomHash = s
         }
-    }catch(ignored){}
+    } catch (ignored) {
+    }
 }
 dependencies {
     implementation("com.discord4j:discord4j-core:3.1.3")
