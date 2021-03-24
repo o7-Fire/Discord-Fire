@@ -32,7 +32,7 @@ class o7FireTacticalPluginManager {
         "info": {
             "name": "o7FireTacticalPluginManager",
             "author": "o7Fire",
-            "version": "0.4.2",
+            "version": "0.5.2",
             "description": "#Tools"
         },
         "changeLog": {
@@ -71,7 +71,6 @@ class o7FireTacticalPluginManager {
         this.add("https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/GoogleTranslateOption/GoogleTranslateOption.plugin.js");
         this.add("https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/CreationDate/CreationDate.plugin.js");
         this.add("https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/CompleteTimestamps/CompleteTimestamps.plugin.js");
-        this.add("https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/BetterFormattingRedux/BetterFormattingRedux.plugin.js");
 	this.add("https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/DoNotTrack/DoNotTrack.plugin.js");
     }
     // Start/Stop
